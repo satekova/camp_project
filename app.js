@@ -4,6 +4,8 @@ const app = express();
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
+const ejsMate = require('ejs-mate');
+
 mongoose.connect('mongodb://localhost:27017/camp')
   .then(() => {
     console.log("Database connected");
@@ -12,13 +14,14 @@ mongoose.connect('mongodb://localhost:27017/camp')
     console.error("connection error:", err);
   });
 
-const Campground = require('./models/campground')
+const Campground = require('./models/campground');
 
 const port = 3000;
 const path = require('path');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.engine('ejs', ejsMate);
 
 app.use(express.urlencoded({extended: true}));
 
